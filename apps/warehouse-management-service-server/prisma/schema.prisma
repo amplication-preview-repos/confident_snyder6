@@ -1,0 +1,80 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Device {
+  createdAt     DateTime          @default(now())
+  dataZakupu    DateTime?
+  id            String            @id @default(cuid())
+  kodProducenta String?
+  lokalizacja   String?
+  nazwa         String?
+  numerSeryjny  String?
+  status        EnumDeviceStatus?
+  typSprzetu    String?
+  updatedAt     DateTime          @updatedAt
+}
+
+model Employee {
+  createdAt         DateTime @default(now())
+  dzia              String?
+  email             String?
+  id                String   @id @default(cuid())
+  imie              String?
+  nazwisko          String?
+  telefonKontaktowy String?
+  updatedAt         DateTime @updatedAt
+}
+
+model Assignment {
+  createdAt     DateTime  @default(now())
+  dataPrzydziaU DateTime?
+  dataZwrotu    DateTime?
+  id            String    @id @default(cuid())
+  opis          String?
+  pracownik     String?
+  sprzT         String?
+  updatedAt     DateTime  @updatedAt
+}
+
+model Report {
+  createdAt       DateTime              @default(now())
+  dataGenerowania DateTime?
+  id              String                @id @default(cuid())
+  linkDoRaportu   Json?
+  typRaportu      EnumReportTypRaportu?
+  updatedAt       DateTime              @updatedAt
+}
+
+model Inventory {
+  caKowitaLiczbaSprzTu Int?
+  createdAt            DateTime @default(now())
+  dostPneWMagazynie    Int?
+  id                   String   @id @default(cuid())
+  updatedAt            DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+enum EnumDeviceStatus {
+  Option1
+}
+
+enum EnumReportTypRaportu {
+  Option1
+}
